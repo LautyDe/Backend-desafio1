@@ -23,24 +23,32 @@ class ProductManager {
     this.products = [];
   }
 
-  addProduct(title, description, price, thumbnail, stock) {
-    const product = {
-      id: this.#idGenerator(),
-      title: title,
-      description: description,
-      price: price,
-      thumbnail: thumbnail,
-      code: this.#codeGenerator(),
-      stock: stock,
-    };
-
+  addProduct(product) {
     try {
-      if (!title || !description || !price || !thumbnail || !stock) {
-        throw new Error(
-          `Por favor complete todos los parametros requeridos del producto`
-        );
+      if (
+        product.title &&
+        product.description &&
+        product.price &&
+        product.thumbnail &&
+        product.stock
+      ) {
+        return this.products.push({
+          id: this.#idGenerator(),
+          code: this.#codeGenerator(),
+          ...product,
+        });
       } else {
-        this.products.push(product);
+        if (!product.title) {
+          throw new Error(`Falta el title del producto.`);
+        } else if (!product.description) {
+          throw new Error(`Falta la descripcion del producto.`);
+        } else if (!product.price) {
+          throw new Error(`Falta el precio del producto.`);
+        } else if (!product.thumbnail) {
+          throw new Error(`Falta la imagen del producto.`);
+        } else if (!product.stock) {
+          throw new Error(`Falta el stock del producto.`);
+        }
       }
     } catch (error) {
       console.log(`Problema agregando producto: ${error.message}`);
@@ -71,20 +79,22 @@ class ProductManager {
 
 const lautaro = new ProductManager();
 
-lautaro.getProducts();
-lautaro.addProduct(
-  "producto prueba",
-  "este es un producto de prueba",
-  200,
-  "sin imagen",
-  25
-);
-lautaro.addProduct(
-  "prueba 2",
-  "este es un producto de prueba 2",
-  300,
-  "sin imagen",
-  10
-);
 //lautaro.getProducts();
-lautaro.getProductById(2);
+lautaro.addProduct({
+  title: "Joystick PS5",
+  description: "Joystick para consola PS5",
+  price: 25000,
+  thumbnail:
+    "https://images.fravega.com/f1000/a23c2e9cbe114eca833fc5f7288457fc.jpg",
+  stock: 30,
+});
+lautaro.addProduct({
+  title: "Auriculares PS5",
+  description: "Auriculares compatibles con PS5 y computadoras",
+  price: 42000,
+  thumbnail:
+    "https://arsonyb2c.vtexassets.com/arquivos/ids/348062/PS5_WHS_Pshot_A.jpg?v=637363806123470000",
+  stock: 22,
+});
+//lautaro.getProducts();
+//lautaro.getProductById(2);
