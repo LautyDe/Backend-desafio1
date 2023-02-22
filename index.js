@@ -65,9 +65,9 @@ class ProductManager {
 
   getProductById(id) {
     try {
-      const idProduct = this.products.filter(product => product.id === id);
-      if (idProduct.length > 0) {
-        console.log(idProduct[0]);
+      const idProduct = this.products.find(product => product.id === id);
+      if (idProduct) {
+        console.log(idProduct);
       } else throw new Error(`Not found`);
     } catch (error) {
       console.log(
@@ -97,4 +97,4 @@ lautaro.addProduct({
   stock: 22,
 });
 //lautaro.getProducts();
-//lautaro.getProductById(2);
+lautaro.getProductById(2);
