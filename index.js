@@ -63,7 +63,7 @@ class ProductManager {
 
   getProducts() {
     try {
-      console.log(this.products);
+      return this.products;
     } catch (error) {
       console.log(`Error obteniendo todos los productos: ${error.message}`);
     }
