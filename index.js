@@ -19,39 +19,45 @@ class ProductManager {
     return id;
   }
 
+  #paramsValidator(product) {
+    if (
+      product.title &&
+      product.description &&
+      product.price &&
+      product.thumbnail &&
+      product.stock
+    ) {
+      return true;
+    } else {
+      if (!product.title) {
+        throw new Error(`Falta el title del producto.`);
+      } else if (!product.description) {
+        throw new Error(`Falta la descripcion del producto.`);
+      } else if (!product.price) {
+        throw new Error(`Falta el precio del producto.`);
+      } else if (!product.thumbnail) {
+        throw new Error(`Falta la imagen del producto.`);
+      } else if (!product.stock) {
+        throw new Error(`Falta el stock del producto.`);
+      }
+    }
+  }
+
   constructor() {
     this.products = [];
   }
 
   addProduct(product) {
     try {
-      if (
-        product.title &&
-        product.description &&
-        product.price &&
-        product.thumbnail &&
-        product.stock
-      ) {
+      if (this.#paramsValidator(product)) {
         return this.products.push({
           id: this.#idGenerator(),
           code: this.#codeGenerator(),
           ...product,
         });
-      } else {
-        if (!product.title) {
-          throw new Error(`Falta el title del producto.`);
-        } else if (!product.description) {
-          throw new Error(`Falta la descripcion del producto.`);
-        } else if (!product.price) {
-          throw new Error(`Falta el precio del producto.`);
-        } else if (!product.thumbnail) {
-          throw new Error(`Falta la imagen del producto.`);
-        } else if (!product.stock) {
-          throw new Error(`Falta el stock del producto.`);
-        }
       }
     } catch (error) {
-      console.log(`Problema agregando producto: ${error.message}`);
+      console.log(`Error agregando producto: ${error.message}`);
     }
   }
 
@@ -70,9 +76,7 @@ class ProductManager {
         console.log(idProduct);
       } else throw new Error(`Not found`);
     } catch (error) {
-      console.log(
-        `Problema al buscar producto con el id ${id}: ${error.message}`
-      );
+      console.log(`Error al buscar producto con el id ${id}: ${error.message}`);
     }
   }
 }
@@ -97,4 +101,4 @@ lautaro.addProduct({
   stock: 22,
 });
 //lautaro.getProducts();
-lautaro.getProductById(2);
+//lautaro.getProductById(2);
