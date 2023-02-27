@@ -101,4 +101,4 @@ lautaro.addProduct({
   stock: 22,
 });
 //lautaro.getProducts();
-//lautaro.getProductById(2);
+//lautaro.getProductById();
